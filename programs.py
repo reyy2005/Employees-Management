@@ -16,16 +16,6 @@ def db_emloyees() :
     
 
 def create_data(db) :
-
-    """
-        1. Checking database while not have data
-    """
-    
-    if len(db['name']) == 0 : 
-        
-        print('Data tidak tersedia.')
-        print("Silahkan untuk input data terlebih dahulu...")
-        input("Tekan Enter Untuk Melanjutkan...")
     
     os.system("cls" if os.name == "nt" else "clear")
     
@@ -104,8 +94,7 @@ def create_data(db) :
                     input("Tekan Enter Untuk ke Menu Utama...")
             
                     os.system('cls' if os.name=="nt" else "clear")
-                    show_header()
-                    break
+                    return
                     
             except ValueError :
                 
@@ -123,7 +112,7 @@ def create_data(db) :
                         
                         print()
                         input_new_name = input("Masukkan Nama : ")
-                        db['name'].append(input_new_name)
+                        db['name'][-1] = input_new_name
                         
                         os.system("cls" if os.name == "nt" else "clear")    
                         
@@ -141,7 +130,7 @@ def create_data(db) :
                         
                         print()
                         input_new_age = int(input("Masukkan Umur : "))
-                        db['age'].append(input_new_age)
+                        db['age'][-1] = input_new_age
                         
                         os.system("cls" if os.name=="nt" else "clear")
                         
@@ -159,7 +148,7 @@ def create_data(db) :
                         
                         print()
                         input_new_position = input("Masukkan Posisi : ")
-                        db['position'].append(input_new_position)
+                        db['position'][-1] = input_new_position
                         
                         os.system("cls" if os.name=="nt" else "clear")
                         
@@ -177,7 +166,7 @@ def create_data(db) :
                         
                         print()
                         input_new_role = input("Masukkan Role/Jabatan : ")
-                        db['role'].append(input_new_role)
+                        db['role'][-1] = input_new_role
                         
                         os.system('cls' if os.name=="nt" else "clear")
                         
@@ -195,7 +184,7 @@ def create_data(db) :
                         
                         print()
                         input_new_division = input("Masukkan Divisi/Departement")
-                        db['department'].append(input_new_division)
+                        db['department'][-1] = input_new_division
                         
                         print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
                         print(f"2. Umur Karyawan : {input_age}")
@@ -211,7 +200,7 @@ def create_data(db) :
                         
                         print()
                         input_new_salary = int(input("Masukkan Gaji : "))
-                        db['salary'].append(input_new_salary)
+                        db['salary'][-1] = input_new_salary
                         
                         print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
                         print(f"2. Umur Karyawan : {input_age}")
@@ -234,33 +223,75 @@ def create_data(db) :
                     input("Tekan Enter Untuk Melanjutkan...")
                                   
 
-def show_header() :
+def show_data(db) :
+
+    os.system('cls' if os.name=="nt" else "clear")
     
-    print('Selamat Datang di Program Management-Karyawan'.center(20))
-    
-    print()
-    
-    print('Pilih Tindakan : ')
-    print('1. Buat Data')
-    print('2. Lihat Data')
-    print('3. Update Data')
-    print('4. Hapus Data')
-    print('5. Keluar Program')
-    
-    print()
-    
-    input_user_program = int(input('Input No : '))
-    
-    if input_user_program == 1 :
-        db = db_emloyees()
-        create_data(db)
+    if len(db['name']) == 0 :
         
-    elif input_user_program == 5 :
+        print('Data tidak tersedia.')
+        print("Silahkan untuk input data terlebih dahulu...")
+        input("Tekan Enter Untuk Melanjutkan...")
         
-        print("Program Dihentikan.")
-        exit()
+    else :
         
-show_header()
+        os.system('cls' if os.name=="nt" else "clear")
+        
+        print(f"{"="*20}INFORMASI KARYAWAN{"="*20}".center(20))
+        
+        data = []
+        
+        for index in range(len(db['name'])) :
+            data.append([
+                db['name'][index].capitalize(),
+                db['age'][index],
+                db['position'][index].capitalize(),
+                db['role'][index].capitalize(),
+                db['department'][index].upper(),
+                db['salary'][index]
+            ])
+            
+        header = ["Nama Lengkap Karyawan","Umur","Posisi","Role/Jabatan","Departement/Divisi","Gaji"]
+        print(tabulate(tabular_data=data,headers=header,tablefmt="fancy_grid"))
+        
+        print()
+        
+        input("Tekan Enter Untuk Kembali Ke Menu Utama...")
+            
+def show_header(db) :
+    
+    while True :
+        
+        os.system('cls' if os.name=="nt" else "clear")
+        print('Selamat Datang di Program Management-Karyawan'.center(20))
+        
+        print()
+        
+        print('Pilih Tindakan : ')
+        print('1. Buat Data')
+        print('2. Lihat Data')
+        print('3. Update Data')
+        print('4. Hapus Data')
+        print('5. Keluar Program')
+        
+        print()
+        
+        input_user_program = int(input('Input No : '))
+        if input_user_program == 1 :
+            create_data(db)
+            
+        elif input_user_program == 2 :
+            
+            show_data(db)
+            
+        elif input_user_program == 5 :
+            
+            print("Program Dihentikan.")
+            exit()
+        
+if __name__ == "__main__" :
+    db = db_emloyees()
+    show_header(db)
 
     
     
