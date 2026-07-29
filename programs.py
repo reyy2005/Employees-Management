@@ -257,6 +257,76 @@ def show_data(db) :
         print()
         
         input("Tekan Enter Untuk Kembali Ke Menu Utama...")
+        
+def update_data(db) :
+    
+    if len(db['name']) == 0 :
+        
+        print("Tidak Ada Data Yang Tersedia.")
+        print("Silahkan Input Data Terlebih Dahulu.")
+        input("Tekan Enter Untuk Menlanjutkan...")
+        
+    else :
+        
+        os.system("cls" if os.name=="nt" else "clear")
+        
+        print("="*20,"INFORMASI KARYAWAN".center(20),"="*20)
+        
+        data = []
+        
+        for i in range(len(db['name'])) :
+            
+            data.append([
+                db['name'][i].capitalize(),
+                db['age'][i],
+                db['position'][i].capitalize(),
+                db['role'][i].capitalize(),
+                db['department'][i].capitalize(),
+                db['salary'][i],
+                
+            ])
+        
+        header = ["Nama Lengkap Karyawan",'Umur','Posisi','Role/Jabatan','Departement/Divisi','Gaji']
+        print(tabulate(data,header,"fancy_grid"))
+        
+        print()
+        
+        while True :
+            
+            try :
+                
+                input_user_update = input('Masukkan Nama Karyawan Yang Akan Di Update : '.capitalize())
+                
+                if input_user_update in db['name'] :
+                    
+                    os.system('cls' if os.name=="nt" else "clear")
+                    
+                    print(f"Informasi Data Lengkap Karyawan : {input_user_update.capitalize()}")
+                    get_index = db['name'].index(input_user_update)
+                    print()
+                    
+                    print(f"Nama Lengkap : {db['name'][get_index]}")
+                    print(f"Umur : {db['age'][get_index]}")
+                    print(f"Posisi : {db['position'][get_index]}")
+                    print(f"Role/Jabatan : {db['role'][get_index]}")
+                    print(f"Departement/Divisi : {db['department'][get_index]}")
+                    print(f'Gaji : {db['salary'][get_index]}')
+                    
+                else :
+                    
+                    print("Nama Karyawan Tidak Ditemukan.")
+                    continue
+                
+            except ValueError :
+                
+                print("Format Input Tidak Valid. Gunakan Format Input Yang Benar!")
+                input("Tekan Enter Untuk Melanjutkan...")
+                    
+                    
+                    
+                    
+                    
+
             
 def show_header(db) :
     
@@ -283,6 +353,9 @@ def show_header(db) :
         elif input_user_program == 2 :
             
             show_data(db)
+            
+        elif input_user_program == 3 :
+            update_data(db)
             
         elif input_user_program == 5 :
             
