@@ -258,6 +258,7 @@ def show_data(db) :
         
         input("Tekan Enter Untuk Kembali Ke Menu Utama...")
         
+        
 def update_data(db) :
     
     if len(db['name']) == 0 :
@@ -271,6 +272,7 @@ def update_data(db) :
         os.system("cls" if os.name=="nt" else "clear")
         
         print("="*20,"INFORMASI KARYAWAN".center(20),"="*20)
+        print()
         
         data = []
         
@@ -302,15 +304,25 @@ def update_data(db) :
                     os.system('cls' if os.name=="nt" else "clear")
                     
                     print(f"Informasi Data Lengkap Karyawan : {input_user_update.capitalize()}")
-                    get_index = db['name'].index(input_user_update)
                     print()
                     
-                    print(f"Nama Lengkap : {db['name'][get_index]}")
-                    print(f"Umur : {db['age'][get_index]}")
-                    print(f"Posisi : {db['position'][get_index]}")
-                    print(f"Role/Jabatan : {db['role'][get_index]}")
-                    print(f"Departement/Divisi : {db['department'][get_index]}")
-                    print(f'Gaji : {db['salary'][get_index]}')
+                    show_data_update_index = []
+                   
+                    for i in range(len(db['name'])) :
+                        
+                        if db['name'][i] == input_user_update :
+                            
+                            show_data_update_index.append([
+                                db['name'][i].capitalize(),
+                                db['age'][i],
+                                db['position'][i].capitalize(),
+                                db['role'][i].capitalize(),
+                                db['department'][i].capitalize(),
+                                db['salary'][i],
+                            ])
+                                                
+                    header_show_update_employee = ["Nama Lengkap Karyawan",'Umur','Posisi','Role/Jabatan','Departement/Divisi','Gaji']
+                    print(tabulate(show_data_update_index,header_show_update_employee,"fancy_grid"))
                     
                 else :
                     
@@ -321,11 +333,73 @@ def update_data(db) :
                 
                 print("Format Input Tidak Valid. Gunakan Format Input Yang Benar!")
                 input("Tekan Enter Untuk Melanjutkan...")
+            
+            print()
+            
+            print('1. Update Nama')
+            print('2. Update Umur')
+            print('3. Update Posisi')
+            print('4. Update Role/Jabatan')
+            print('5. Update Departement/Divisi')
+            print('6. Update Gaji')
+            
+            print()
+
+            choose_option_update = int(input('Pilih No : '))
+            
+            try :
+                
+                if choose_option_update == 1 :
                     
+                    input_new_name_update = input("Input Nama Lengkap Karyawan : ".capitalize())
+                    db['name'][-1] = input_new_name_update
+                    input('Tekan Enter Untuk Kembali...')
+                    break
+                
+                elif choose_option_update == 2 :
                     
+                    input_new_age_update = int(input("Input Umur : "))
+                    db['age'][-1] = input_new_age_update
+                    input('Tekan Enter Untuk Kembali...')
+                    break
                     
+                elif choose_option_update == 3 :
                     
+                    input_new_status_update = input("Input Status Karyawan : ".capitalize())
+                    db['position'][-1] = input_new_status_update
+                    input('Tekan Enter Untuk Kembali...')
+                    break
+                
+                elif choose_option_update == 4 :
                     
+                    input_new_role_update = input('Input Role Karyawan : '.capitalize())
+                    db['position'][-1] = input_new_role_update
+                    input('Tekan Enter Untuk Kembali...')
+                    break
+                
+                elif choose_option_update == 5 :
+                    
+                    input_new_department_update = input('Input Divisi : ')
+                    db['department'][-1] = input_new_department_update
+                    input('Tekan Enter Untuk Kembali...')
+                    break
+                    
+                elif choose_option_update == 6 :
+                    
+                    input_new_salary_update = int(input('Input Gaji : '))
+                    db['salary'][-1] = input_new_salary_update
+                    input('Tekan Enter Untuk Kembali...')
+                    break
+                    
+                else : 
+                    
+                    print("Maaf Pilihan Tidak Valid. Silahkan Gunakan No yang Tertera.")
+                    input("Tekan Enter Untuk Melanjutkan...")                    
+                
+            except ValueError :
+                
+                print("Format Input Tidak Valid. Masukkan Format Data Dengan Sesuai!")
+                input("Tekan Enter Untuk Melanjutkan...")
 
             
 def show_header(db) :
