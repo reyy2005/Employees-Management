@@ -38,8 +38,8 @@ def create_data(db) :
             
             if input_status == "Kontrak" :
                 
-                input_contract_start = input('Input Awal Kontrak (hari/bulan/tahun) : '.capitalize())
-                input_contract_ended = input('Input Akhir Kontrak (hari/bulan/tahun) : '.capitalize())
+                input_contract_start = input('Input Awal Kontrak (tgl/bulan/tahun) : '.capitalize())
+                input_contract_ended = input('Input Akhir Kontrak (tgl/bulan/tahun) : '.capitalize())
 
                 db['contract_start'].append(input_contract_start)
                 db['contract_ended'].append(input_contract_ended)
@@ -156,7 +156,7 @@ def create_data(db) :
                         if input_status == "Kontrak" :
                             
                             print()
-                            input_new_name = input("Masukkan Nama : ")
+                            input_new_name = input("Input Nama : ")
                             db['name'][-1] = input_new_name
                             
                             os.system("cls" if os.name == "nt" else "clear")    
@@ -176,7 +176,7 @@ def create_data(db) :
                         else : 
                             
                             print()
-                            input_new_name = input("Masukkan Nama : ")
+                            input_new_name = input("Input Nama : ")
                             db['name'][-1] = input_new_name
                             
                             os.system("cls" if os.name == "nt" else "clear")    
@@ -193,146 +193,254 @@ def create_data(db) :
                             
                     elif input_user_option == 2 :
                         
-                        print()
-                        input_new_age = int(input("Masukkan Umur : "))
-                        db['age'][-1] = input_new_age
+                        if input_status == "Kontrak" :
+                            
+                            print()
+                            input_new_age = int(input("Input Umur : "))
+                            db['age'][-1] = input_new_age
+                            
+                            os.system("cls" if os.name=="nt" else "clear")
+                            
+                            print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
+                            print(f"2. Umur Karyawan : {input_new_age}")
+                            print(f"3. Status Karyawan : {input_status.capitalize()}")
+                            print(f"4. Awal Kontrak : {input_contract_start.capitalize()}")
+                            print(f"5. Akhir Kontrak : {input_contract_ended.capitalize()}")
+                            print(f"6. Role/Jabatan Karyawan : {input_role.capitalize()}")
+                            print(f"7. Departement/Divisi Karyawan : {input_department.upper()}")
+                            print(f"8. Gaji Karyawan : {input_salary}")
+                            
+                            print()
+                            break
                         
-                        os.system("cls" if os.name=="nt" else "clear")
-                        
-                        print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
-                        print(f"2. Umur Karyawan : {input_new_age}")
-                        print(f"3. Status Karyawan : {input_status.capitalize()}")
-                        print(f"4. Awal Kontrak : {input_contract_start.capitalize()}")
-                        print(f"5. Akhir Kontrak : {input_contract_ended.capitalize()}")
-                        print(f"6. Role/Jabatan Karyawan : {input_role.capitalize()}")
-                        print(f"7. Departement/Divisi Karyawan : {input_department.upper()}")
-                        print(f"8. Gaji Karyawan : {input_salary}")
-                        
-                        print()
-                        break
+                        else :
+                            
+                            print()
+                            input_new_age = int(input("Input Umur : "))
+                            db['age'][-1] = input_new_age
+                            
+                            os.system("cls" if os.name=="nt" else "clear")
+                            
+                            print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
+                            print(f"2. Umur Karyawan : {input_new_age}")
+                            print(f"3. Status Karyawan : {input_status.capitalize()}")
+                            print(f"4. Role/Jabatan Karyawan : {input_role.capitalize()}")
+                            print(f"5. Departement/Divisi Karyawan : {input_department.upper()}")
+                            print(f"6. Gaji Karyawan : {input_salary}")
+                            
+                            print()
+                            break
                             
                     elif input_user_option == 3 :
                         
-                        print()
-                        input_new_status = input("Masukkan Status : ")
-                        db['status'][-1] = input_new_status
+                        if input_status == "Kontrak" : 
+                            
+                            print()
+                            input_new_status = input("Input Status : ")
+                            db['status'][-1] = input_new_status
+                            
+                            os.system("cls" if os.name=="nt" else "clear")
+                            
+                            print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
+                            print(f"2. Umur Karyawan : {input_age}")
+                            print(f"3. Status Karyawan : {input_new_status.capitalize()}")
+                            print(f"4. Awal Kontrak : {input_contract_start.capitalize()}")
+                            print(f"5. Akhir Kontrak : {input_contract_ended.capitalize()}")
+                            print(f"6. Role/Jabatan Karyawan : {input_role.capitalize()}")
+                            print(f"7. Departement/Divisi Karyawan : {input_department.upper()}")
+                            print(f"8. Gaji Karyawan : {input_salary}")
+                                                            
+                            print()
+                            break
                         
-                        os.system("cls" if os.name=="nt" else "clear")
-                        
-                        print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
-                        print(f"2. Umur Karyawan : {input_age}")
-                        print(f"3. Status Karyawan : {input_new_status.capitalize()}")
-                        print(f"4. Awal Kontrak : {input_contract_start.capitalize()}")
-                        print(f"5. Akhir Kontrak : {input_contract_ended.capitalize()}")
-                        print(f"6. Role/Jabatan Karyawan : {input_role.capitalize()}")
-                        print(f"7. Departement/Divisi Karyawan : {input_department.upper()}")
-                        print(f"8. Gaji Karyawan : {input_salary}")
-                                                        
-                        print()
-                        break
+                        else :
+                            
+                            print()
+                            input_new_status = input("Input Status : ")
+                            db['status'][-1] = input_new_status
+                            
+                            os.system("cls" if os.name=="nt" else "clear")
+                            
+                            print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
+                            print(f"2. Umur Karyawan : {input_age}")
+                            print(f"3. Status Karyawan : {input_new_status.capitalize()}")
+                            print(f"5. Departement/Divisi Karyawan : {input_department.upper()}")
+                            print(f"6. Gaji Karyawan : {input_salary}")
+                            
+                            print()
+                            break
                         
                     elif input_user_option == 4 :
                         
-                        input_new_contract_start = input("Input Awal Kontrak (tgl/bulan/tahun) : ")
-                        db['contract_start'][-1] = input_new_contract_start
+                        if input_status == "Kontrak" :
+                            
+                            print()
+                            input_new_contract_start = input("Input Awal Kontrak (tgl/bulan/tahun) : ")
+                            db['contract_start'][-1] = input_new_contract_start
+                            
+                            os.system("cls" if os.name=="nt" else "clear")
+                            
+                            print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
+                            print(f"2. Umur Karyawan : {input_age}")
+                            print(f"3. Status Karyawan : {input_status.capitalize()}")
+                            print(f"4. Awal Kontrak : {input_new_contract_start.capitalize()}")
+                            print(f"5. Akhir Kontrak : {input_contract_ended.capitalize()}")
+                            print(f"6. Role/Jabatan Karyawan : {input_role.capitalize()}")
+                            print(f"7. Departement/Divisi Karyawan : {input_department.upper()}")
+                            print(f"8. Gaji Karyawan : {input_salary}")
+                            
+                            print()
+                            break
                         
-                        os.system("cls" if os.name=="nt" else "clear")
-                        
-                        print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
-                        print(f"2. Umur Karyawan : {input_age}")
-                        print(f"3. Status Karyawan : {input_status.capitalize()}")
-                        print(f"4. Awal Kontrak : {input_new_contract_start.capitalize()}")
-                        print(f"5. Akhir Kontrak : {input_contract_ended.capitalize()}")
-                        print(f"6. Role/Jabatan Karyawan : {input_role.capitalize()}")
-                        print(f"7. Departement/Divisi Karyawan : {input_department.upper()}")
-                        print(f"8. Gaji Karyawan : {input_salary}")
-                        
-                        print()
-                        break
+                        else :
+                            
+                            print()
+                            input_new_role = input("Input Role/Jabatan : ")
+                            db['role'][-1] = input_new_role
+                            
+                            os.system('cls' if os.name=="nt" else "clear")
+                            
+                            print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
+                            print(f"2. Umur Karyawan : {input_age}")
+                            print(f"3. Status Karyawan : {input_status.capitalize()}")
+                            print(f"4. Role/Jabatan Karyawan : {input_new_role.capitalize()}")
+                            print(f"5. Departement/Divisi Karyawan : {input_department.capitalize()}")
+                            print(f"6. Gaji Karyawan : {input_salary}")
+                            
+                            print()
+                            break
                         
                     elif input_user_option == 5 :
+                        
+                        if input_status == "Kontrak" :
                             
-                        input_new_contract_ended = input("Input Awal Kontrak (tgl/bulan/tahun) : ")
-                        db['contract_start'][-1] = input_new_contract_ended
+                            print()    
+                            input_new_contract_ended = input("Input Awal Kontrak (tgl/bulan/tahun) : ")
+                            db['contract_start'][-1] = input_new_contract_ended
+                            
+                            os.system("cls" if os.name=="nt" else "clear")
+                            
+                            print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
+                            print(f"2. Umur Karyawan : {input_age}")
+                            print(f"3. Status Karyawan : {input_status.capitalize()}")
+                            print(f"4. Awal Kontrak : {input_contract_start.capitalize()}")
+                            print(f"5. Akhir Kontrak : {input_new_contract_ended.capitalize()}")
+                            print(f"6. Role/Jabatan Karyawan : {input_role.capitalize()}")
+                            print(f"7. Departement/Divisi Karyawan : {input_department.upper()}")
+                            print(f"8. Gaji Karyawan : {input_salary}")
+                            
+                            print()
+                            break
                         
-                        os.system("cls" if os.name=="nt" else "clear")
-                        
-                        print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
-                        print(f"2. Umur Karyawan : {input_age}")
-                        print(f"3. Status Karyawan : {input_status.capitalize()}")
-                        print(f"4. Awal Kontrak : {input_contract_start.capitalize()}")
-                        print(f"5. Akhir Kontrak : {input_new_contract_ended.capitalize()}")
-                        print(f"6. Role/Jabatan Karyawan : {input_role.capitalize()}")
-                        print(f"7. Departement/Divisi Karyawan : {input_department.upper()}")
-                        print(f"8. Gaji Karyawan : {input_salary}")
-                        
-                        print()
-                        break
+                        else :
+                            
+                            print()
+                            input_new_division = input("Input Divisi/Departement : ")
+                            db['department'][-1] = input_new_division
+                            
+                            print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
+                            print(f"2. Umur Karyawan : {input_age}")
+                            print(f"3. Status Karyawan : {input_status.capitalize()}")
+                            print(f"4. Role/Jabatan Karyawan : {input_role.capitalize()}")
+                            print(f"5. Departement/Divisi Karyawan : {input_new_division.capitalize()}")
+                            print(f"6. Gaji Karyawan : {input_salary}")
+                            
+                            print()
+                            break
                             
                     elif input_user_option == 6 :
                         
-                        print()
-                        input_new_role = input("Masukkan Role/Jabatan : ")
-                        db['role'][-1] = input_new_role
+                        if input_status == "Kontrak" :
                         
-                        os.system('cls' if os.name=="nt" else "clear")
-                        
-                        print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
-                        print(f"2. Umur Karyawan : {input_age}")
-                        print(f"3. Status Karyawan : {input_status.capitalize()}")
-                        print(f"4. Awal Kontrak : {input_contract_start.capitalize()}")
-                        print(f"5. Akhir Kontrak : {input_contract_ended.capitalize()}")
-                        print(f"6. Role/Jabatan Karyawan : {input_new_role.capitalize()}")
-                        print(f"7. Departement/Divisi Karyawan : {input_department.capitalize()}")
-                        print(f"8. Gaji Karyawan : {input_salary}")
-                        
-                        print()
-                        break
+                            print()
+                            input_new_role = input("Input Role/Jabatan : ")
+                            db['role'][-1] = input_new_role
                             
+                            os.system('cls' if os.name=="nt" else "clear")
+                            
+                            print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
+                            print(f"2. Umur Karyawan : {input_age}")
+                            print(f"3. Status Karyawan : {input_status.capitalize()}")
+                            print(f"4. Awal Kontrak : {input_contract_start.capitalize()}")
+                            print(f"5. Akhir Kontrak : {input_contract_ended.capitalize()}")
+                            print(f"6. Role/Jabatan Karyawan : {input_new_role.capitalize()}")
+                            print(f"7. Departement/Divisi Karyawan : {input_department.capitalize()}")
+                            print(f"8. Gaji Karyawan : {input_salary}")
+                            
+                            print()
+                            break
+                        
+                        else :
+                            
+                            print()
+                            input_new_salary = int(input("Input Gaji : "))
+                            db['salary'][-1] = input_new_salary
+                            
+                            print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
+                            print(f"2. Umur Karyawan : {input_age}")
+                            print(f"3. Status Karyawan : {input_status.capitalize()}")
+                            print(f"4. Role/Jabatan Karyawan : {input_role.capitalize()}")
+                            print(f"5. Departement/Divisi Karyawan : {input_department.capitalize()}")
+                            print(f"6. Gaji Karyawan : {input_new_salary}")
+                            
+                            print()
+                            break
+
                     elif input_user_option == 7 :
                         
-                        print()
-                        input_new_division = input("Masukkan Divisi/Departement")
-                        db['department'][-1] = input_new_division
+                        if input_status == "Kontrak" :
+                            
+                            print()
+                            input_new_division = input("Input Divisi/Departement : ")
+                            db['department'][-1] = input_new_division
+                            
+                            print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
+                            print(f"2. Umur Karyawan : {input_age}")
+                            print(f"3. Status Karyawan : {input_status.capitalize()}")
+                            print(f"4. Awal Kontrak : {input_contract_start.capitalize()}")
+                            print(f"5. Akhir Kontrak : {input_contract_ended.capitalize()}")
+                            print(f"6. Role/Jabatan Karyawan : {input_role.capitalize()}")
+                            print(f"7. Departement/Divisi Karyawan : {input_new_division.capitalize()}")
+                            print(f"8. Gaji Karyawan : {input_salary}")
+                            
+                            print()
+                            break
                         
-                        print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
-                        print(f"2. Umur Karyawan : {input_age}")
-                        print(f"3. Status Karyawan : {input_status.capitalize()}")
-                        print(f"4. Awal Kontrak : {input_contract_start.capitalize()}")
-                        print(f"5. Akhir Kontrak : {input_contract_ended.capitalize()}")
-                        print(f"6. Role/Jabatan Karyawan : {input_role.capitalize()}")
-                        print(f"7. Departement/Divisi Karyawan : {input_new_division.capitalize()}")
-                        print(f"8. Gaji Karyawan : {input_salary}")
-                        
-                        print()
-                        break
+                        else :
+                            
+                            print()
+                            break
                             
                     elif input_user_option == 8 :
                             
-                        print()
-                        input_new_salary = int(input("Masukkan Gaji : "))
-                        db['salary'][-1] = input_new_salary
+                        if input_status == "Kontrak" :
+                            
+                            print()
+                            input_new_salary = int(input("Input Gaji : "))
+                            db['salary'][-1] = input_new_salary
+                            
+                            print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
+                            print(f"2. Umur Karyawan : {input_age}")
+                            print(f"3. Status Karyawan : {input_status.capitalize()}")
+                            print(f"4. Awal Kontrak : {input_contract_start.capitalize()}")
+                            print(f"5. Akhir Kontrak : {input_contract_ended.capitalize()}")
+                            print(f"6. Role/Jabatan Karyawan : {input_role.capitalize()}")
+                            print(f"7. Departement/Divisi Karyawan : {input_department.capitalize()}")
+                            print(f"8. Gaji Karyawan : {input_new_salary}")
+                            
+                            print()
+                            break
                         
-                        print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
-                        print(f"2. Umur Karyawan : {input_age}")
-                        print(f"3. Status Karyawan : {input_status.capitalize()}")
-                        print(f"4. Awal Kontrak : {input_contract_start.capitalize()}")
-                        print(f"5. Akhir Kontrak : {input_contract_ended.capitalize()}")
-                        print(f"6. Role/Jabatan Karyawan : {input_role.capitalize()}")
-                        print(f"7. Departement/Divisi Karyawan : {input_department.capitalize()}")
-                        print(f"8. Gaji Karyawan : {input_new_salary}")
-                        
-                        print()
-                        break
+                        else :
+                            
+                            print()
+                            break
                         
                     else :
                             
                         print("Maaf Pilihan Tidak Valid. Silahkan Gunakan No yang Tertera.")
                         input("Tekan Enter Untuk Melanjutkan...")
                             
-                        
-                        
-                
                 except ValueError :
                     
                     print("Format Input Tidak Valid. Masukkan Format Data Dengan Sesuai!")
