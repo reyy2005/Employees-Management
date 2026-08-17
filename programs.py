@@ -34,15 +34,14 @@ def create_data(db) :
             
             input_name = input("Input Nama Lengkap Karyawan : ".capitalize())
             input_age = int(input("Input Umur Karyawan : "))
-            input_status = input("Input Status Karyawan : ".capitalize())
+            input_status = input("Input Status Karyawan : ".capitalize()).lower()
+            input_contract_start = ""
+            input_contract_ended = ""
             
-            if input_status == "Kontrak" :
+            if input_status == "kontrak" :
                 
                 input_contract_start = input('Input Awal Kontrak (tgl/bulan/tahun) : '.capitalize())
                 input_contract_ended = input('Input Akhir Kontrak (tgl/bulan/tahun) : '.capitalize())
-
-                db['contract_start'].append(input_contract_start)
-                db['contract_ended'].append(input_contract_ended)
             
             input_role = input("Input Role/Jabatan Karyawan : ".capitalize())
             input_department = input("Input Departement/Divisi Karyawan : ".capitalize())
@@ -54,6 +53,8 @@ def create_data(db) :
             db['name'].append(input_name)
             db['age'].append(input_age)
             db['status'].append(input_status)
+            db['contract_start'].append(input_contract_start)
+            db['contract_ended'].append(input_contract_ended)
             db['role'].append(input_role)
             db['department'].append(input_department)
             db['salary'].append(input_salary)
@@ -64,7 +65,7 @@ def create_data(db) :
                 4. Showing all informations the employee
             """
             
-            if input_status == 'Kontrak' :
+            if input_status == 'kontrak' :
                 
                 print(f"{"="*20}INFORMASI DATA KARYAWAN : {input_name.upper()} {"="*20} ".center(20))
                 print()
@@ -93,6 +94,8 @@ def create_data(db) :
             print()
             print("Format Input Tidak Valid. Masukkan Format Data Dengan Sesuai!")
             input("Tekan Enter Untuk Melanjutkan...")
+            os.system("cls" if os.name == "nt" else "clear")
+            continue
             
         while True :    
             
@@ -103,7 +106,7 @@ def create_data(db) :
                 
                 if input_user_action == "N" :
                     
-                    if input_status != "Kontrak" :
+                    if input_status != "kontrak" :
                         
                         os.system('cls' if os.name=="nt" else "clear")
                         print("Silahkan Input Kembali Data Dengan Benar")
@@ -126,7 +129,7 @@ def create_data(db) :
                         print(f"2. Umur Karyawan : {input_age}")
                         print(f"3. Status Karyawan : {input_status.capitalize()}")
                         print(f"4. Awal Kontrak : {input_contract_start.capitalize()}")
-                        print(f"5. Awal Kontrak : {input_contract_ended.capitalize()}")
+                        print(f"5. Akhir Kontrak : {input_contract_ended.capitalize()}")
                         print(f"6. Role/Jabatan Karyawan : {input_role.capitalize()}")
                         print(f"7. Departement/Divisi Karyawan : {input_department.upper()}")
                         print(f"8. Gaji Karyawan : {input_salary}")
@@ -153,7 +156,7 @@ def create_data(db) :
                         
                     if input_user_option == 1 :
                             
-                        if input_status == "Kontrak" :
+                        if input_status == "kontrak" :
                             
                             print()
                             input_new_name = input("Input Nama : ")
@@ -193,7 +196,7 @@ def create_data(db) :
                             
                     elif input_user_option == 2 :
                         
-                        if input_status == "Kontrak" :
+                        if input_status == "kontrak" :
                             
                             print()
                             input_new_age = int(input("Input Umur : "))
@@ -233,10 +236,10 @@ def create_data(db) :
                             
                     elif input_user_option == 3 :
                         
-                        if input_status == "Kontrak" : 
+                        if input_status == "kontrak" : 
                             
                             print()
-                            input_new_status = input("Input Status : ")
+                            input_new_status = input("Input Status : ").lower()
                             db['status'][-1] = input_new_status
                             
                             os.system("cls" if os.name=="nt" else "clear")
@@ -256,7 +259,7 @@ def create_data(db) :
                         else :
                             
                             print()
-                            input_new_status = input("Input Status : ")
+                            input_new_status = input("Input Status : ").lower()
                             db['status'][-1] = input_new_status
                             
                             os.system("cls" if os.name=="nt" else "clear")
@@ -272,7 +275,7 @@ def create_data(db) :
                         
                     elif input_user_option == 4 :
                         
-                        if input_status == "Kontrak" :
+                        if input_status == "kontrak" :
                             
                             print()
                             input_new_contract_start = input("Input Awal Kontrak (tgl/bulan/tahun) : ")
@@ -312,7 +315,7 @@ def create_data(db) :
                         
                     elif input_user_option == 5 :
                         
-                        if input_status == "Kontrak" :
+                        if input_status == "kontrak" :
                             
                             print()    
                             input_new_contract_ended = input("Input Awal Kontrak (tgl/bulan/tahun) : ")
@@ -350,7 +353,7 @@ def create_data(db) :
                             
                     elif input_user_option == 6 :
                         
-                        if input_status == "Kontrak" :
+                        if input_status == "kontrak" :
                         
                             print()
                             input_new_role = input("Input Role/Jabatan : ")
@@ -388,7 +391,7 @@ def create_data(db) :
 
                     elif input_user_option == 7 :
                         
-                        if input_status == "Kontrak" :
+                        if input_status == "kontrak" :
                             
                             print()
                             input_new_division = input("Input Divisi/Departement : ")
@@ -413,7 +416,7 @@ def create_data(db) :
                             
                     elif input_user_option == 8 :
                             
-                        if input_status == "Kontrak" :
+                        if input_status == "kontrak" :
                             
                             print()
                             input_new_salary = int(input("Input Gaji : "))
@@ -589,7 +592,7 @@ def update_data(db) :
                     
                 elif choose_option_update == 3 :
                     
-                    input_new_status_update = input("Input Status Karyawan : ".capitalize())
+                    input_new_status_update = input("Input Status Karyawan : ".capitalize()).lower()
                     db['status'][-1] = input_new_status_update
                     input('Tekan Enter Untuk Kembali...')
                     break
