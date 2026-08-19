@@ -449,9 +449,13 @@ def create_data(db) :
                     print("Format Input Tidak Valid. Masukkan Format Data Dengan Sesuai!")
                     input("Tekan Enter Untuk Melanjutkan...")
                                   
-
+            os.system("cls" if os.name=="nt" else "clear")
+            print()
+            show_data(db)
+            
+    
 def show_data(db) :
-
+    
     os.system('cls' if os.name=="nt" else "clear")
     
     if len(db['name']) == 0 :
@@ -469,22 +473,28 @@ def show_data(db) :
         data = []
         
         for index in range(len(db['name'])) :
+            
+            contract_started = db['contract_start'][index].capitalize() if db['contract_start'][index] else "-"
+            contract_ended = db['contract_ended'][index].capitalize() if db['contract_ended'][index] else "-"
+            
             data.append([
                 db['name'][index].capitalize(),
                 db['age'][index],
                 db['status'][index].capitalize(),
+                contract_started,
+                contract_ended,
                 db['role'][index].capitalize(),
                 db['department'][index].upper(),
                 db['salary'][index]
             ])
             
-        header = ["Nama Lengkap Karyawan","Umur","Status","Role/Jabatan","Departement/Divisi","Gaji"]
+        header = ["Nama Lengkap Karyawan","Umur","Status","Awal Kontrak","Akhir Kontrak","Role/Jabatan","Departement/Divisi","Gaji"]
         print(tabulate(tabular_data=data,headers=header,tablefmt="fancy_grid"))
         
         print()
         
         input("Tekan Enter Untuk Kembali Ke Menu Utama...")
-        
+    
         
 def update_data(db) :
     
