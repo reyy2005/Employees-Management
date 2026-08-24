@@ -1,5 +1,7 @@
 from tabulate import tabulate
-import os 
+import os
+import signal
+import sys
 os.system("cls" if os.name == "nt" else "clear")
 
 def db_emloyees() :
@@ -239,9 +241,9 @@ def create_data(db) :
                         if input_status == "kontrak" : 
                             
                             print()
-                            input_new_status = input("Input Status : ").lower()
+                            input_new_status = input("Input Status : ".capitalize()).lower()
                             db['status'][-1] = input_new_status
-                            
+                 
                             os.system("cls" if os.name=="nt" else "clear")
                             
                             print(f"1. Nama Lengkap Karyawan : {input_name.capitalize()}")
@@ -515,17 +517,22 @@ def update_data(db) :
         
         for i in range(len(db['name'])) :
             
+            contract_started = db['contract_start'][i] if db['contract_start'][i] else "-"
+            contract_ended = db['contract_ended'][i] if db['contract_ended'][i] else "-"
+            
             data.append([
                 db['name'][i].capitalize(),
                 db['age'][i],
                 db['status'][i].capitalize(),
+                contract_started,
+                contract_ended,
                 db['role'][i].capitalize(),
                 db['department'][i].capitalize(),
                 db['salary'][i],
                 
             ])
         
-        header = ["Nama Lengkap Karyawan",'Umur','Status','Role/Jabatan','Departement/Divisi','Gaji']
+        header = ["Nama Lengkap Karyawan",'Umur','Status','Awal Kontrak','Akhir Kontrak','Role/Jabatan','Departement/Divisi','Gaji']
         print(tabulate(data,header,"fancy_grid"))
         
         print()
@@ -553,12 +560,14 @@ def update_data(db) :
                                 db['name'][i].capitalize(),
                                 db['age'][i],
                                 db['status'][i].capitalize(),
+                                contract_started,
+                                contract_ended,
                                 db['role'][i].capitalize(),
                                 db['department'][i].capitalize(),
                                 db['salary'][i],
                             ])
                                                 
-                    header_show_update_employee = ["Nama Lengkap Karyawan",'Umur','Status','Role/Jabatan','Departement/Divisi','Gaji']
+                    header_show_update_employee = ["Nama Lengkap Karyawan",'Umur','Status','Awal Kontrak','Akhir Kontrak','Role/Jabatan','Departement/Divisi','Gaji']
                     print(tabulate(show_data_update_index,header_show_update_employee,"fancy_grid"))
                     
                 else :
@@ -573,72 +582,187 @@ def update_data(db) :
             
             print()
             
-            print('1. Update Nama')
-            print('2. Update Umur')
-            print('3. Update Status')
-            print('4. Update Role/Jabatan')
-            print('5. Update Departement/Divisi')
-            print('6. Update Gaji')
+            get_data_status_info = show_data_update_index[0][2]
             
-            print()
+            for i in range(len(db['name'])) :
+                
+                if get_data_status_info == 'Kontrak' :
+            
+                    print('1. Update Nama')
+                    print('2. Update Umur')
+                    print('3. Update Status')
+                    print('4. Update Awal Kontrak')
+                    print('5. Update Akhir Kontrak')
+                    print('6. Update Role/Jabatan')
+                    print('7. Update Departement/Divisi')
+                    print('8. Update Gaji')
+                    
+                    print()
 
-            choose_option_update = int(input('Pilih No : '))
-            
-            try :
-                
-                if choose_option_update == 1 :
+                    choose_option_update = int(input('Pilih No : '))
                     
-                    input_new_name_update = input("Input Nama Lengkap Karyawan : ".capitalize())
-                    db['name'][-1] = input_new_name_update
-                    input('Tekan Enter Untuk Kembali...')
-                    break
-                
-                elif choose_option_update == 2 :
+                    try :
+                        
+                        if choose_option_update == 1 :
+                            
+                            input_new_name_update = input("Input Nama Lengkap Karyawan : ".capitalize())
+                            db['name'][-1] = input_new_name_update
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                        
+                        elif choose_option_update == 2 :
+                            
+                            input_new_age_update = int(input("Input Umur : "))
+                            db['age'][-1] = input_new_age_update
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                            
+                        elif choose_option_update == 3 :
+                            
+                            input_new_status_update = input("Input Status Karyawan : ".capitalize()).lower()
+                            db['status'][-1] = input_new_status_update
+                            
+                            if input_new_status_update == "tetap" :
+                                
+                                db['contract_start'][-1] = "-"
+                                db['contract_ended'][-1] = "-"
+                                break
+                                
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                        
+                        elif choose_option_update == 4 :
+                            
+                            input_new_contract_start = input("Input Awal Kontrak (tgl/bulan/tahun) : ".capitalize())
+                            db['contract_start'][-1] = input_new_contract_start
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                            
+                        elif choose_option_update == 5 :
+                            
+                            input_new_contract_end = input("Input Akhir Kontrak (tgl/bulan/tahun) : ".capitalize()) 
+                            db['contract_ended'][-1] = input_new_contract_end
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                            
+                        elif choose_option_update == 6 :
+                            
+                            input_new_role_update = input('Input Role Karyawan : '.capitalize())
+                            db['status'][-1] = input_new_role_update
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                        
+                        elif choose_option_update == 7 :
+                            
+                            input_new_department_update = input('Input Divisi : ')
+                            db['department'][-1] = input_new_department_update
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                            
+                        elif choose_option_update == 8 :
+                            
+                            input_new_salary_update = int(input('Input Gaji : '))
+                            db['salary'][-1] = input_new_salary_update
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                            
+                        else : 
+                            
+                            print("Maaf Pilihan Tidak Valid. Silahkan Gunakan No yang Tertera.")
+                            input("Tekan Enter Untuk Melanjutkan...")                    
+                        
+                    except ValueError :
+                        
+                        print("Format Input Tidak Valid. Masukkan Format Data Dengan Sesuai!")
+                        input("Tekan Enter Untuk Melanjutkan...")
+                        
+                else :
                     
-                    input_new_age_update = int(input("Input Umur : "))
-                    db['age'][-1] = input_new_age_update
-                    input('Tekan Enter Untuk Kembali...')
-                    break
+                    print('1. Update Nama')
+                    print('2. Update Umur')
+                    print('3. Update Status')
+                    print('4. Update Role/Jabatan')
+                    print('5. Update Departement/Divisi')
+                    print('6. Update Gaji')
                     
-                elif choose_option_update == 3 :
-                    
-                    input_new_status_update = input("Input Status Karyawan : ".capitalize()).lower()
-                    db['status'][-1] = input_new_status_update
-                    input('Tekan Enter Untuk Kembali...')
-                    break
-                
-                elif choose_option_update == 4 :
-                    
-                    input_new_role_update = input('Input Role Karyawan : '.capitalize())
-                    db['status'][-1] = input_new_role_update
-                    input('Tekan Enter Untuk Kembali...')
-                    break
-                
-                elif choose_option_update == 5 :
-                    
-                    input_new_department_update = input('Input Divisi : ')
-                    db['department'][-1] = input_new_department_update
-                    input('Tekan Enter Untuk Kembali...')
-                    break
-                    
-                elif choose_option_update == 6 :
-                    
-                    input_new_salary_update = int(input('Input Gaji : '))
-                    db['salary'][-1] = input_new_salary_update
-                    input('Tekan Enter Untuk Kembali...')
-                    break
-                    
-                else : 
-                    
-                    print("Maaf Pilihan Tidak Valid. Silahkan Gunakan No yang Tertera.")
-                    input("Tekan Enter Untuk Melanjutkan...")                    
-                
-            except ValueError :
-                
-                print("Format Input Tidak Valid. Masukkan Format Data Dengan Sesuai!")
-                input("Tekan Enter Untuk Melanjutkan...")
+                    print()
 
+                    choose_option_update = int(input('Pilih No : '))
+                    
+                    try :
+                        
+                        if choose_option_update == 1 :
+                            
+                            input_new_name_update = input("Input Nama Lengkap Karyawan : ".capitalize())
+                            db['name'][-1] = input_new_name_update
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                        
+                        elif choose_option_update == 2 :
+                            
+                            input_new_age_update = int(input("Input Umur : "))
+                            db['age'][-1] = input_new_age_update
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                            
+                        elif choose_option_update == 3 :
+                            
+                            input_new_status_update = input("Input Status Karyawan : ".capitalize()).lower()
+                            db['status'][-1] = input_new_status_update
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                        
+                        elif choose_option_update == 4 :
+                            
+                            input_new_role_update = input('Input Role Karyawan : '.capitalize())
+                            db['status'][-1] = input_new_role_update
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                        
+                        elif choose_option_update == 5 :
+                            
+                            input_new_department_update = input('Input Divisi : ')
+                            db['department'][-1] = input_new_department_update
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                            
+                        elif choose_option_update == 6 :
+                            
+                            input_new_salary_update = int(input('Input Gaji : '))
+                            db['salary'][-1] = input_new_salary_update
+                            input('Tekan Enter Untuk Kembali...')
+                            break
+                            
+                        else : 
+                            
+                            print("Maaf Pilihan Tidak Valid. Silahkan Gunakan No yang Tertera.")
+                            input("Tekan Enter Untuk Melanjutkan...")                    
+                        
+                    except ValueError :
+                        
+                        print("Format Input Tidak Valid. Masukkan Format Data Dengan Sesuai!")
+                        input("Tekan Enter Untuk Melanjutkan...")
+                          
+                    
+def close_cli() :
+
+    ppid = os.getppid()
+    
+    try :
+        
+        if os.name =="nt" :
             
+            os.system(f"taskkill /F /PID {ppid}")
+            
+        else :
+            
+            os.kill(ppid,signal.SIGTERM)
+            
+    except Exception :
+        
+        sys.exit()
+        
+        
 def show_header(db) :
     
     while True :
@@ -673,7 +797,7 @@ def show_header(db) :
             
         elif input_user_program == 5 :
             
-            print("Program Dihentikan.")
+            close_cli()
             exit()
         
 if __name__ == "__main__" :
