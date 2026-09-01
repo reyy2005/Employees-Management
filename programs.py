@@ -561,8 +561,16 @@ def update_data(db) :
             try :
                 
                 input_user_update = input('Masukkan Nama Karyawan Yang Akan Di Update : '.capitalize())
+                selected_index = None
                 
-                if input_user_update in db['name'] :
+                for i in range(len(db['name'])) :
+                    
+                    if db['name'][i].lower() == input_user_update.lower() :
+                        
+                        selected_index = i
+                        break
+                    
+                if selected_index != None :
                     
                     os.system('cls' if os.name=="nt" else "clear")
                     
@@ -570,21 +578,19 @@ def update_data(db) :
                     print()
                     
                     show_data_update_index = []
-                   
-                    for i in range(len(db['name'])) :
-                        
-                        if db['name'][i] == input_user_update :
+                    contract_started = db['contract_start'][selected_index] if db['contract_start'][selected_index] else "-"
+                    contract_ended = db['contract_ended'][selected_index] if db['contract_ended'][selected_index] else "-"
                             
-                            show_data_update_index.append([
-                                db['name'][i].capitalize(),
-                                db['age'][i],
-                                db['status'][i].capitalize(),
-                                contract_started,
-                                contract_ended,
-                                db['role'][i].capitalize(),
-                                db['department'][i].capitalize(),
-                                db['salary'][i],
-                            ])
+                    show_data_update_index.append([
+                        db['name'][selected_index].capitalize(),
+                        db['age'][selected_index],
+                        db['status'][selected_index].capitalize(),
+                        contract_started,
+                        contract_ended,
+                        db['role'][selected_index].capitalize(),
+                        db['department'][selected_index].capitalize(),
+                        db['salary'][selected_index],
+                    ])
                                                 
                     header_show_update_employee = ["Nama Lengkap Karyawan",'Umur','Status','Awal Kontrak','Akhir Kontrak','Role/Jabatan','Departement/Divisi','Gaji']
                     print(tabulate(show_data_update_index,header_show_update_employee,"fancy_grid"))
@@ -623,85 +629,89 @@ def update_data(db) :
                     if choose_option_update == 1 :
                         
                         input_new_name_update = input("Input Nama Lengkap Karyawan : ".capitalize())
-                        db['name'][-1] = input_new_name_update
+                        db['name'][selected_index] = input_new_name_update
                         input('Tekan Enter Untuk Kembali...')
                         break
                     
                     elif choose_option_update == 2 :
                         
                         input_new_age_update = int(input("Input Umur : "))
-                        db['age'][-1] = input_new_age_update
+                        db['age'][selected_index] = input_new_age_update
                         input('Tekan Enter Untuk Kembali...')
                         break
                         
                     elif choose_option_update == 3 :
                         
                         input_new_status_update = input("Input Status Karyawan : ".capitalize()).lower()
-                        db['status'][-1] = input_new_status_update
+                        db['status'][selected_index] = input_new_status_update
                         
                         if input_new_status_update == "tetap" :
                             
-                            data_tetap = []
+                            data_tetap = []            
+                            db['contract_start'][selected_index] = "-"
+                            db['contract_ended'][selected_index] = "-"
                             
-                            for i in range(len(db['name'])) :
+                            data_tetap.append([
+                                db['name'][selected_index].capitalize(),
+                                db['age'][selected_index],
+                                db['status'][selected_index].capitalize(),
+                                "-",
+                                "-",
+                                db['role'][selected_index].capitalize(),
+                                db['department'][selected_index].capitalize(),
+                                db['salary'][selected_index]
                                 
-                                if db['status'][i] == "tetap" :
+                            ])
                                 
-                                    db['contract_start'][i] = "-"
-                                    db['contract_ended'][i] = "-"
-                                    
-                                    data_tetap.append([
-                                        db['name'][i].capitalize(),
-                                        db['age'][i],
-                                        db['status'][i].capitalize(),
-                                        db['contract_start'][i],
-                                        db['contract_ended'][i],
-                                        db['role'][i].capitalize(),
-                                        db['department'][i].capitalize(),
-                                        db['salary'][i]
-                                        
-                                    ])
-                                
-                                os.system('cls' if os.name=="nt" else "clear")
-                                header_show_data_tetap = ["Nama Lengkap Karyawan",'Umur','Status','Awal Kontrak','Akhir Kontrak','Role/Jabatan','Departement/Divisi','Gaji']
-                                print(tabulate(data_tetap,header_show_data_tetap,'fancy_grid'))
-                                break
+                            os.system('cls' if os.name=="nt" else "clear")
+                            header_show_data_tetap = ["Nama Lengkap Karyawan",'Umur','Status','Awal Kontrak','Akhir Kontrak','Role/Jabatan','Departement/Divisi','Gaji']
+                            print(tabulate(data_tetap,header_show_data_tetap,'fancy_grid'))
+                            break
+                        
+                        elif input_new_status_update == "kontrak" :
                             
+                            db['contract_start'][selected_index] = input("Input Awal Kontrak (tgl/bulan/tahun) : ".capitalize())
+                            db['contract_ended'][selected_index] = input("Input Akhir Kontrak (tgl/bulan/tahun) : ".capitalize())
+                            
+                        else :
+                            
+                            db['status'][selected_index] = input_new_status_update
+                        
                         input('Tekan Enter Untuk Kembali...')
                         break
                     
                     elif choose_option_update == 4 :
                         
                         input_new_contract_start = input("Input Awal Kontrak (tgl/bulan/tahun) : ".capitalize())
-                        db['contract_start'][-1] = input_new_contract_start
+                        db['contract_start'][selected_index] = input_new_contract_start
                         input('Tekan Enter Untuk Kembali...')
                         break
                         
                     elif choose_option_update == 5 :
                         
                         input_new_contract_end = input("Input Akhir Kontrak (tgl/bulan/tahun) : ".capitalize()) 
-                        db['contract_ended'][-1] = input_new_contract_end
+                        db['contract_ended'][selected_index] = input_new_contract_end
                         input('Tekan Enter Untuk Kembali...')
                         break
                         
                     elif choose_option_update == 6 :
                         
                         input_new_role_update = input('Input Role Karyawan : '.capitalize())
-                        db['status'][-1] = input_new_role_update
+                        db['status'][selected_index] = input_new_role_update
                         input('Tekan Enter Untuk Kembali...')
                         break
                     
                     elif choose_option_update == 7 :
                         
                         input_new_department_update = input('Input Divisi : ')
-                        db['department'][-1] = input_new_department_update
+                        db['department'][selected_index] = input_new_department_update
                         input('Tekan Enter Untuk Kembali...')
                         break
                         
                     elif choose_option_update == 8 :
                         
                         input_new_salary_update = int(input('Input Gaji : '))
-                        db['salary'][-1] = input_new_salary_update
+                        db['salary'][selected_index] = input_new_salary_update
                         input('Tekan Enter Untuk Kembali...')
                         break
                         
@@ -733,42 +743,53 @@ def update_data(db) :
                     if choose_option_update == 1 :
                         
                         input_new_name_update = input("Input Nama Lengkap Karyawan : ".capitalize())
-                        db['name'][-1] = input_new_name_update
+                        db['name'][selected_index] = input_new_name_update
                         input('Tekan Enter Untuk Kembali...')
                         break
                     
                     elif choose_option_update == 2 :
                         
                         input_new_age_update = int(input("Input Umur : "))
-                        db['age'][-1] = input_new_age_update
+                        db['age'][selected_index] = input_new_age_update
                         input('Tekan Enter Untuk Kembali...')
                         break
                         
                     elif choose_option_update == 3 :
                         
                         input_new_status_update = input("Input Status Karyawan : ".capitalize()).lower()
-                        db['status'][-1] = input_new_status_update
+                        db['status'][selected_index] = input_new_status_update
+                        
+                        if input_new_status_update == "kontrak" :
+                            
+                            db['contract_start'][selected_index] = input("Input Awal Kontrak (tgl/bulan/tahun) : ".capitalize())
+                            db['contract_ended'][selected_index] = input("Input Akhir Kontrak (tgl/bulan/tahun) : ".capitalize())
+                            
+                        else :
+                            
+                            db['contract_start'][selected_index] = "-"
+                            db['contract_start'][selected_index] = "-"
+                            
                         input('Tekan Enter Untuk Kembali...')
                         break
                     
                     elif choose_option_update == 4 :
                         
                         input_new_role_update = input('Input Role Karyawan : '.capitalize())
-                        db['role'][-1] = input_new_role_update
+                        db['role'][selected_index] = input_new_role_update
                         input('Tekan Enter Untuk Kembali...')
                         break
                     
                     elif choose_option_update == 5 :
                         
                         input_new_department_update = input('Input Divisi : ')
-                        db['department'][-1] = input_new_department_update
+                        db['department'][selected_index] = input_new_department_update
                         input('Tekan Enter Untuk Kembali...')
                         break
                         
                     elif choose_option_update == 6 :
                         
                         input_new_salary_update = int(input('Input Gaji : '))
-                        db['salary'][-1] = input_new_salary_update
+                        db['salary'][selected_index] = input_new_salary_update
                         input('Tekan Enter Untuk Kembali...')
                         break
                         
