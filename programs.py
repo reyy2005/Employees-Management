@@ -802,7 +802,79 @@ def update_data(db) :
                     
                     print("Format Input Tidak Valid. Masukkan Format Data Dengan Sesuai!")
                     input("Tekan Enter Untuk Melanjutkan...")
-                          
+         
+def delete_data(db) :
+    
+    os.system("cls" if os.name == "nt" else "clear")
+    
+    if len(db['name']) == 0 :
+        
+        print("Data tidak tersedia")
+        print("Silahkan untup input data terlebih dahulu...")
+        input("Tekan Enter Untuk Melanjutkan....")
+        
+    else :
+        
+        os.system("cls" if os.name == "nt" else "clear")
+        print(f"{"="*20} INFORMASI KARYAWAN {"="*20}".center(20))
+
+        data = []
+                
+        for index in range(len(db['name'])) :
+            
+            if db['status'][index] == "tetap" :
+                
+                db['contract_start'][index] = "-"
+                db['contract_ended'][index] = "-"
+                
+                data.append([
+                    db['name'][index].capitalize(),
+                    db['age'][index],
+                    db['status'][index].capitalize(),
+                    db['contract_start'][index],
+                    db['contract_ended'][index],
+                    db['role'][index].capitalize(),
+                    db['department'][index].capitalize(),
+                    db['salary'][index]
+                ])
+                continue
+            
+            else :
+                
+                contract_started = db['contract_start'][index].capitalize() if db['contract_start'][index] else "-"
+                contract_ended = db['contract_ended'][index].capitalize() if db['contract_ended'][index] else "-"
+                
+                data.append([
+                    db['name'][index].capitalize(),
+                    db['age'][index],
+                    db['status'][index].capitalize(),
+                    contract_started,
+                    contract_ended,
+                    db['role'][index].capitalize(),
+                    db['department'][index].upper(),
+                    db['salary'][index]
+                ])
+                    
+        header = ["Nama Lengkap Karyawan","Umur","Status","Awal Kontrak","Akhir Kontrak","Role/Jabatan","Departement/Divisi","Gaji"]
+        print(tabulate(tabular_data=data,headers=header,tablefmt="fancy_grid"))
+        
+        print()
+        
+        delete_employees = input("Input nama karyawan yang akan dihapus :  ")
+        delete_data = None
+        
+        for i in range(len(db['name'])) :
+            
+            if db['name'][i].capitalize() == delete_employees.capitalize() :
+                
+                delete_data = i
+                
+                del db['name'][delete_data]
+                break
+            
+        print()
+        print("Data berhasil dihapus!")
+        input("Tekan Enter Untuk Kembali Ke Menu Utama...")
                     
 def close_cli() :
 
@@ -854,6 +926,10 @@ def show_header(db) :
         elif input_user_program == 3 :
             
             update_data(db)
+            
+        elif input_user_program == 4 :
+            
+            delete_data(db)
             
         elif input_user_program == 5 :
             
